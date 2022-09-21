@@ -7,7 +7,10 @@ import BudgetContext from "../context/useContext";
 
 const CalenderScreen = (navigation) => {
   const { data } = useContext(BudgetContext);
-  const [date, setdate] = useState("2022-09-13");
+
+  const today = moment(new Date()).format("YYYY-MM-DD");
+  const [date, setdate] = useState(today);
+  const style = {};
 
   const dataDatePressed = data.Budget.filter((data) => data.date === date);
   const dataAddSymbol = dataDatePressed.map((data) => {
@@ -17,17 +20,26 @@ const CalenderScreen = (navigation) => {
     };
   });
 
-  //console.log(p2);
+  data.Budget.forEach(
+    (todo) =>
+      (style[todo.date] = {
+        selected: true,
+        marked: true,
+        //selectedColor: `#66cdaa`,
+        dotColor: todo.income === true ? "green" : "red",
+      })
+  );
 
   return (
     <View style={{ flexDirection: "column" }}>
       <View style={{ flexDirection: "row" }}>
         <Agenda
-          selected={"2022-09-13"}
+          selected={today}
           onDayPress={(day) => {
             setdate(day.dateString);
           }}
           style={{ height: 150 }}
+          markedDates={style}
         ></Agenda>
       </View>
       <View style={styles.listConainer}>

@@ -14,10 +14,7 @@ import * as Progress from "react-native-progress";
 
 const BudgetScreen = ({ navigation }) => {
   const { data } = useContext(BudgetContext);
-  const f = new Map();
-  const s = {};
-  const p = {};
-  // let expense;
+
   navigation.setOptions({
     headerRight: () => (
       <TouchableOpacity onPress={() => navigation.navigate("CreateBudget")}>
@@ -28,15 +25,8 @@ const BudgetScreen = ({ navigation }) => {
 
   const Budget = data.Budget.filter((B) => B.budget > parseFloat("0"));
 
-  // const Budget2= Budget.map((m)=>m.category))
-  //console.log(+Budget[0].expense / +Budget[0].budget);
   console.log(Budget);
-  //data.Budget.forEach((el) => {
-  // return (s[el.category] = /*{ d: el.date }*/ f.set(el.date, el.expense)); // ex: el.expense, date: el.date
-  // const s = { category: el.category };
-  // return f.set(el.category, el.b);
-  //});
-  // console.log(f.get("Cabs"));
+
   return (
     <View>
       <FlatList
@@ -53,7 +43,6 @@ const BudgetScreen = ({ navigation }) => {
                       flexDirection: "column",
                       borderWidth: 0,
                       flex: 1,
-                      //height: 50,
                     }}
                   >
                     <Text
@@ -71,23 +60,14 @@ const BudgetScreen = ({ navigation }) => {
                         fontWeight: "bold",
                       }}
                     >
-                      {
-                        +item.budget -
-                          item.value /*.reduce((acc, cur) => acc + cur, 0)*/
-                      }{" "}
-                      left
+                      {+item.budget - item.value} left
                     </Text>
                     <Text style={{ color: "grey" }}>
-                      {item.value /*.reduce((acc, cur) => acc + cur, 0)*/} of{" "}
-                      {item.budget}
+                      {item.value} of {item.budget}
                     </Text>
 
                     <Progress.Bar
-                      progress={
-                        item.value /*.reduce((acc, cur) => acc + cur, 0)*/ /
-                        +item.budget
-                      }
-                      //progress={5 / 2}
+                      progress={item.value / +item.budget}
                       width={300}
                       color={`#008b8b`}
                       height={10}
